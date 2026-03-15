@@ -141,7 +141,7 @@ DISPUTE NOTES:
 ### Prerequisites
 
 - Python 3.11+
-- PostgreSQL 15+
+- PostgreSQL 18+
 - Access to the billing pipeline's event stream (Kafka / SQS / direct DB)
 
 ### Installation
@@ -149,8 +149,10 @@ DISPUTE NOTES:
 ```bash
 git clone https://github.com/your-org/dispute-replay-tool
 cd dispute-replay-tool
+python -m venv venv && venv\Scripts\activate  # Windows
 pip install -r requirements.txt
-cp .env.example .env  # configure DB and event store connection
+pip install -e .
+cp .env.example .env  # configure DB connection
 python scripts/migrate.py
 ```
 
@@ -175,7 +177,6 @@ uvicorn app:app --reload
 GET /replay/{transaction_id}
 GET /replay/{transaction_id}?format=json
 GET /replay/{transaction_id}/events          # raw event log
-GET /replay/{transaction_id}/diff?compare=v2 # compare two pipeline runs
 ```
 
 ---
@@ -256,5 +257,3 @@ Low-confidence extractions are the most common root cause of disputes. Making co
 ## License
 
 MIT
-#   d i s p u t e _ r e p l a y _ t o o l  
- 
